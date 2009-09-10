@@ -39,7 +39,8 @@ BEGIN
     Set @sql = N'SELECT 
         ''EXEC sgp_drop_table @table='''''' + TABLE_NAME + ''''''''
     FROM information_schema.tables
-    WHERE TABLE_NAME LIKE {pattern}'
+    WHERE TABLE_NAME LIKE {pattern}
+    AND TABLE_TYPE = ''BASE TABLE'''
 
     set @sql = replace(@sql, '{pattern}', QUOTENAME(@pattern, ''''))
                         
