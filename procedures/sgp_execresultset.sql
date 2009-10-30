@@ -1,8 +1,3 @@
-SET ANSI_NULLS ON
-GO
-SET QUOTED_IDENTIFIER ON
-GO
-
 IF EXISTS (SELECT * FROM dbo.sysobjects WHERE Id = OBJECT_ID(N'[dbo].[sgp_execresultset]') AND OBJECTPROPERTY(Id, N'IsProcedure') = 1)
 DROP PROCEDURE [dbo].[sgp_execresultset]
 GO
@@ -23,13 +18,15 @@ GO
     (1)
     
     History:
-    05/27/2009       nramji      Original Coding.
+    05/27/2009      nramji      Original Coding.
+    10/30/2009      nramji      Added new @stats parameter to make stat output optional.
     
 ********************************************************************************/
 CREATE PROCEDURE sgp_execresultset
     @cmd NVARCHAR(4000)             -- the query to execute
     , @db_name NVARCHAR(128) = NULL -- (optional) the database to run against
     , @debug INT = 0                -- (optional) print dynamic sql text, without executing
+    , @stats INT = 0                -- (optional) print execution stats
 AS
 BEGIN
 	-- SET NOCOUNT ON added to prevent extra result sets from
@@ -98,25 +95,28 @@ BEGIN
     
     -- aggregate error codes
     DECLARE @sum_error_codes INT
-    SELECT @sum_error_codes = SUM(error_code) 
+    SELECT @sum_error_codes = ISNULL(SUM(error_code), 0) 
     FROM #resultset
  
     DROP TABLE #resultset
     
     -- print stats
-    PRINT   CONVERT(VARCHAR, @row_count - @sum_error_codes) + ' out of ' + 
-            CONVERT(VARCHAR, @row_count) + ' queries passed.'
-            
-    PRINT   CONVERT(VARCHAR, @sum_error_codes) + ' failed.'         
-            
+    IF @stats = 1
+    BEGIN
+        PRINT   'sgp_execresultset query:'
+        PRINT   '   ' + @cmd
+        PRINT   ''
+        PRINT   'sgp_execresultset stats:'
+        PRINT   '   total: ' + CONVERT(VARCHAR, @row_count)
+        PRINT   '   passed: ' + CONVERT(VARCHAR, @row_count - @sum_error_codes)
+        PRINT   '   failed: ' + CONVERT(VARCHAR, @sum_error_codes)
+        PRINT   ''
+        PRINT   '------------------------'
+        PRINT   ''    
+    END
+        
     -- return
     RETURN @sum_error_codes
     
 END
 GO
-
-SET QUOTED_IDENTIFIER OFF 
-GO
-SET ANSI_NULLS ON 
-GO
-
