@@ -1,9 +1,9 @@
-IF EXISTS (SELECT * FROM dbo.sysobjects WHERE Id = OBJECT_ID(N'[dbo].[sgp_drop_functions]') AND OBJECTPROPERTY(Id, N'IsProcedure') = 1)
-DROP PROCEDURE [dbo].[sgp_drop_functions]
+IF EXISTS (SELECT * FROM dbo.sysobjects WHERE Id = OBJECT_ID(N'[dbo].[sqlcorlib_drop_functions]') AND OBJECTPROPERTY(Id, N'IsProcedure') = 1)
+DROP PROCEDURE [dbo].[sqlcorlib_drop_functions]
 GO
 /*******************************************************************************
 
-    Name:           sgp_drop_functions
+    Name:           sqlcorlib_drop_functions
     Description:    drops all (or a subset) of the functions in the database.
 
     Dependencies:
@@ -19,15 +19,11 @@ GO
     Design Notes:
     (1)
 
-
     TODO:
     (1)
 
-    History:
-    10/30/2009      nramji      Original Coding.
-
 ********************************************************************************/
-CREATE PROCEDURE sgp_drop_functions
+CREATE PROCEDURE sqlcorlib_drop_functions
     @pattern sysname        -- pattern to define which tables to drop
     , @debug INT = 0        -- (optional) output the dynamic sql text, without executing
 AS

@@ -44,7 +44,7 @@ BEGIN
     EXEC sgp_drop_foreign_keys          @pattern = @pattern, @debug = @debug
     EXEC sqlcorlib_drop_tables          @pattern = @pattern, @debug = @debug
     EXEC sqlcorlib_drop_procedures      @pattern = @pattern, @debug = @debug
-    EXEC sgp_drop_functions             @pattern = @pattern, @debug = @debug
+    EXEC sqlcorlib_drop_functions       @pattern = @pattern, @debug = @debug
     EXEC sqlcorlib_drop_views           @pattern = @pattern, @debug = @debug
 
 END
