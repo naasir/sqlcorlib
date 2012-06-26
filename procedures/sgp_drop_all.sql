@@ -29,10 +29,7 @@ GO
         - views
 
     TODO:
-    (1) May want to expand this to drop UDTs (user-defined types)
-
-    History:
-    10/30/2009      nramji      Original coding.
+    (1) May want to expand this to drop UDTs (user-defined types) and triggers
 
 ********************************************************************************/
 CREATE PROCEDURE sgp_drop_all
@@ -44,11 +41,11 @@ BEGIN
 	-- interfering with SELECT statements.
 	SET NOCOUNT ON;
 
-    EXEC sgp_drop_foreign_keys  @pattern = @pattern, @debug = @debug
-    EXEC sqlcorlib_drop_tables  @pattern = @pattern, @debug = @debug
-    EXEC sgp_drop_procedures    @pattern = @pattern, @debug = @debug
-    EXEC sgp_drop_functions     @pattern = @pattern, @debug = @debug
-    EXEC sgp_drop_views         @pattern = @pattern, @debug = @debug
+    EXEC sgp_drop_foreign_keys          @pattern = @pattern, @debug = @debug
+    EXEC sqlcorlib_drop_tables          @pattern = @pattern, @debug = @debug
+    EXEC sqlcorlib_drop_procedures      @pattern = @pattern, @debug = @debug
+    EXEC sgp_drop_functions             @pattern = @pattern, @debug = @debug
+    EXEC sgp_drop_views                 @pattern = @pattern, @debug = @debug
 
 END
 GO

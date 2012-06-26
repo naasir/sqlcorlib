@@ -1,9 +1,9 @@
-IF EXISTS (SELECT * FROM dbo.sysobjects WHERE Id = OBJECT_ID(N'[dbo].[sgp_drop_procedures]') AND OBJECTPROPERTY(Id, N'IsProcedure') = 1)
-DROP PROCEDURE [dbo].[sgp_drop_procedures]
+IF EXISTS (SELECT * FROM dbo.sysobjects WHERE Id = OBJECT_ID(N'[dbo].[sqlcorlib_drop_procedures]') AND OBJECTPROPERTY(Id, N'IsProcedure') = 1)
+DROP PROCEDURE [dbo].[sqlcorlib_drop_procedures]
 GO
 /*******************************************************************************
 
-    Name:           sgp_drop_procedures
+    Name:           sqlcorlib_drop_procedures
     Description:    drops all (or a subset) of the stored procedures in the database.
 
     Dependencies:
@@ -23,11 +23,8 @@ GO
     TODO:
     (1)
 
-    History:
-    10/30/2009      nramji      Original Coding.
-
 ********************************************************************************/
-CREATE PROCEDURE sgp_drop_procedures
+CREATE PROCEDURE sqlcorlib_drop_procedures
     @pattern sysname        -- pattern to define which tables to drop
     , @debug INT = 0        -- (optional) output the dynamic sql text, without executing
 AS
