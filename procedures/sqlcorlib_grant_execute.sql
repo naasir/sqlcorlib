@@ -1,14 +1,9 @@
-SET ANSI_NULLS ON
-GO
-SET QUOTED_IDENTIFIER ON
-GO
-
-IF EXISTS (SELECT * FROM dbo.sysobjects WHERE Id = OBJECT_ID(N'[dbo].[sgp_grant_execute]') AND OBJECTPROPERTY(Id, N'IsProcedure') = 1)
-DROP PROCEDURE [dbo].[sgp_grant_execute]
+IF EXISTS (SELECT * FROM dbo.sysobjects WHERE Id = OBJECT_ID(N'[dbo].[sqlcorlib_grant_execute]') AND OBJECTPROPERTY(Id, N'IsProcedure') = 1)
+DROP PROCEDURE [dbo].[sqlcorlib_grant_execute]
 GO
 /*******************************************************************************
 
-    Name:           sgp_grant_execute
+    Name:           sqlcorlib_grant_execute
     Description:    grants the specefied user EXECUTE permission on all* stored procedures
 
     Dependencies:
@@ -29,13 +24,8 @@ GO
     TODO:
     (1)
 
-    History:
-    05/08/2009      nramji      Original Coding.
-    05/27/2009      nramji      replaced use of SQL2K-only 'xp_execresultset' sproc,
-                                with custom 'sqlcorlib_exec_resultset'
-
 ********************************************************************************/
-CREATE PROCEDURE sgp_grant_execute
+CREATE PROCEDURE sqlcorlib_grant_execute
     @user sysname           -- the user to grant permission to
     , @pattern sysname = '%'-- (optional) name pattern of procedures to grant permission to
     , @debug INT = 0        -- (optional) print dynamic sql text, without executing
@@ -78,9 +68,4 @@ BEGIN
     END
 
 END
-GO
-
-SET QUOTED_IDENTIFIER OFF
-GO
-SET ANSI_NULLS ON
 GO
