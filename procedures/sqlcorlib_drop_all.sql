@@ -1,9 +1,9 @@
-IF EXISTS (SELECT * FROM dbo.sysobjects WHERE Id = OBJECT_ID(N'[dbo].[sgp_drop_all]') AND OBJECTPROPERTY(Id, N'IsProcedure') = 1)
-DROP PROCEDURE [dbo].[sgp_drop_all]
+IF EXISTS (SELECT * FROM dbo.sysobjects WHERE Id = OBJECT_ID(N'[dbo].[sqlcorlib_drop_all]') AND OBJECTPROPERTY(Id, N'IsProcedure') = 1)
+DROP PROCEDURE [dbo].[sqlcorlib_drop_all]
 GO
 /*******************************************************************************
 
-    Name:           sgp_drop_all
+    Name:           sqlcorlib_drop_all
     Description:    drops all (or a subset) of objects in the database.
 
     Dependencies:
@@ -32,7 +32,7 @@ GO
     (1) May want to expand this to drop UDTs (user-defined types) and triggers
 
 ********************************************************************************/
-CREATE PROCEDURE sgp_drop_all
+CREATE PROCEDURE sqlcorlib_drop_all
     @pattern sysname        -- pattern to define which tables to drop
     , @debug INT = 0        -- (optional) output the dynamic sql text, without executing
 AS
