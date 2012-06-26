@@ -41,7 +41,7 @@ BEGIN
 	-- interfering with SELECT statements.
 	SET NOCOUNT ON;
 
-    EXEC sgp_drop_foreign_keys          @pattern = @pattern, @debug = @debug
+    EXEC sqlcorlib_drop_foreign_keys    @pattern = @pattern, @debug = @debug
     EXEC sqlcorlib_drop_tables          @pattern = @pattern, @debug = @debug
     EXEC sqlcorlib_drop_procedures      @pattern = @pattern, @debug = @debug
     EXEC sqlcorlib_drop_functions       @pattern = @pattern, @debug = @debug

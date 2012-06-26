@@ -1,14 +1,9 @@
-SET ANSI_NULLS ON
-GO
-SET QUOTED_IDENTIFIER ON
-GO
-
-IF EXISTS (SELECT * FROM dbo.sysobjects WHERE Id = OBJECT_ID(N'[dbo].[sgp_drop_foreign_keys]') AND OBJECTPROPERTY(Id, N'IsProcedure') = 1)
-DROP PROCEDURE [dbo].[sgp_drop_foreign_keys]
+IF EXISTS (SELECT * FROM dbo.sysobjects WHERE Id = OBJECT_ID(N'[dbo].[sqlcorlib_drop_foreign_keys]') AND OBJECTPROPERTY(Id, N'IsProcedure') = 1)
+DROP PROCEDURE [dbo].[sqlcorlib_drop_foreign_keys]
 GO
 /*******************************************************************************
 
-    Name:           sgp_drop_foreign_keys
+    Name:           sqlcorlib_drop_foreign_keys
     Description:    drops all (or a subset) of the foriegn keys in the database
 
     Dependencies:
@@ -30,7 +25,7 @@ GO
     (1)
 
 ********************************************************************************/
-CREATE PROCEDURE sgp_drop_foreign_keys
+CREATE PROCEDURE sqlcorlib_drop_foreign_keys
     @pattern sysname        -- pattern to define the tables to drop foreign keys for
     , @debug INT = 0        -- (optional) output the dynamic sql text, without executing
 AS
@@ -71,11 +66,3 @@ BEGIN
 
 END
 GO
-
-SET QUOTED_IDENTIFIER OFF
-GO
-SET ANSI_NULLS ON
-GO
-
-
-
