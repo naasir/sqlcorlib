@@ -1,9 +1,9 @@
-IF EXISTS (SELECT * FROM dbo.sysobjects WHERE Id = OBJECT_ID(N'[dbo].[sgp_drop_views]') AND OBJECTPROPERTY(Id, N'IsProcedure') = 1)
-DROP PROCEDURE [dbo].[sgp_drop_views]
+IF EXISTS (SELECT * FROM dbo.sysobjects WHERE Id = OBJECT_ID(N'[dbo].[sqlcorlib_drop_views]') AND OBJECTPROPERTY(Id, N'IsProcedure') = 1)
+DROP PROCEDURE [dbo].[sqlcorlib_drop_views]
 GO
 /*******************************************************************************
 
-    Name:           sgp_drop_views
+    Name:           sqlcorlib_drop_views
     Description:    drops all (or a subset) of the views in the database.
 
     Dependencies:
@@ -19,15 +19,11 @@ GO
     Design Notes:
     (1)
 
-
     TODO:
     (1)
 
-    History:
-    10/30/2009      nramji      Original Coding.
-
 ********************************************************************************/
-CREATE PROCEDURE sgp_drop_views
+CREATE PROCEDURE sqlcorlib_drop_views
     @pattern sysname        -- pattern to define which tables to drop
     , @debug INT = 0        -- (optional) output the dynamic sql text, without executing
 AS
