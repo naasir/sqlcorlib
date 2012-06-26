@@ -6,23 +6,26 @@ GO
     Name:           sgp_drop_views
     Description:    drops all (or a subset) of the views in the database.
 
+    Dependencies:
+    (1) sqlcorlib_exec_resultset
+
     Usage Notes:
     (1) Use the 'pattern' parameter to drop all or a subset of views,
         for example, those that may start with a prefix.
-    
+
         To drop all: @pattern = '%'
         To drop a subset @pattern = 'mmt_%'
-        
+
     Design Notes:
-    (1) 
-    
-    
+    (1)
+
+
     TODO:
     (1)
-    
+
     History:
     10/30/2009      nramji      Original Coding.
-    
+
 ********************************************************************************/
 CREATE PROCEDURE sgp_drop_views
     @pattern sysname        -- pattern to define which tables to drop
@@ -34,25 +37,25 @@ BEGIN
 	SET NOCOUNT ON;
 
     DECLARE @sql NVARCHAR(4000)
-    Set @sql = N'SELECT 
+    Set @sql = N'SELECT
         ''DROP VIEW ['' + TABLE_NAME + '']''
     FROM information_schema.tables
     WHERE TABLE_NAME LIKE {pattern}
     AND TABLE_TYPE = ''VIEW'''
 
     set @sql = replace(@sql, '{pattern}', QUOTENAME(@pattern, ''''))
-                        
+
     -- if debug, print sql without executing
     IF @debug = 1
     BEGIN
         PRINT @sql
         RETURN
     END
-    
+
     -- execute
     DECLARE @error_code INT
-    EXEC @error_code = sgp_execresultset @sql
-    
+    EXEC @error_code = sqlcorlib_exec_resultset @sql
+
     IF @error_code <> 0
     BEGIN
        RAISERROR('Error executing command %s'
@@ -61,6 +64,6 @@ BEGIN
                 , @sql)
        RETURN -1
     END
-	
+
 END
 GO

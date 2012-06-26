@@ -11,26 +11,29 @@ GO
     Name:           sgp_grant_execute
     Description:    grants the specefied user EXECUTE permission on all* stored procedures
 
+    Dependencies:
+    (1) sqlcorlib_exec_resultset
+
     Usage Notes:
     (1) *Use the 'pattern' parameter to grant permission to only a subset of sprocs,
         for example, those that may start with a prefix.
-    
+
     Design Notes:
     (1) This is a cleaned up version of the procedure found here:
         http://www.sqldbatips.com/showarticle.asp?ID=8
-    
-    (2) For 2005 and above, this entire procedure is unneccessary, 
-        as you can simply add the user to the the built-in db_executor role 
+
+    (2) For 2005 and above, this entire procedure is unneccessary,
+        as you can simply add the user to the the built-in db_executor role
         to achieve the same effect.
-    
+
     TODO:
     (1)
-    
+
     History:
     05/08/2009      nramji      Original Coding.
     05/27/2009      nramji      replaced use of SQL2K-only 'xp_execresultset' sproc,
-                                with custom 'sgp_execresultset'
-    
+                                with custom 'sqlcorlib_exec_resultset'
+
 ********************************************************************************/
 CREATE PROCEDURE sgp_grant_execute
     @user sysname           -- the user to grant permission to
@@ -43,27 +46,27 @@ BEGIN
 	SET NOCOUNT ON;
 
     DECLARE @sql NVARCHAR(4000)
-    SET @sql =N'SELECT ''GRANT EXEC ON '' 
-                        + QUOTENAME(ROUTINE_SCHEMA) + ''.'' + QUOTENAME(ROUTINE_NAME) 
-                        + '' TO {user} '' 
-              FROM INFORMATION_SCHEMA.ROUTINES 
+    SET @sql =N'SELECT ''GRANT EXEC ON ''
+                        + QUOTENAME(ROUTINE_SCHEMA) + ''.'' + QUOTENAME(ROUTINE_NAME)
+                        + '' TO {user} ''
+              FROM INFORMATION_SCHEMA.ROUTINES
               WHERE (OBJECTPROPERTY(OBJECT_ID(ROUTINE_NAME),''IsMSShipped'') = 0)
               AND ROUTINE_NAME LIKE {pattern}'
 
     SET @sql = REPLACE(@sql, '{user}', QUOTENAME(@user))
     SET @sql = REPLACE(@sql, '{pattern}', QUOTENAME(@pattern, ''''))
-                        
-    
+
+
     -- if debug, print sql without executing
     IF @debug = 1
     BEGIN
         PRINT @sql
         RETURN
     END
-    
+
     -- execute
     DECLARE @error_code INT
-    EXEC @error_code = sgp_execresultset @sql
+    EXEC @error_code = sqlcorlib_exec_resultset @sql
 
     IF @error_code <> 0
     BEGIN
@@ -73,11 +76,11 @@ BEGIN
                 , @sql)
        RETURN -1
     END
-	
+
 END
 GO
 
-SET QUOTED_IDENTIFIER OFF 
+SET QUOTED_IDENTIFIER OFF
 GO
-SET ANSI_NULLS ON 
+SET ANSI_NULLS ON
 GO
