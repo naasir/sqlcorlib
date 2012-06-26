@@ -1,9 +1,9 @@
-IF EXISTS (SELECT * FROM dbo.sysobjects WHERE Id = OBJECT_ID(N'[dbo].[sgp_drop_tables]') AND OBJECTPROPERTY(Id, N'IsProcedure') = 1)
-DROP PROCEDURE [dbo].[sgp_drop_tables]
+IF EXISTS (SELECT * FROM dbo.sysobjects WHERE Id = OBJECT_ID(N'[dbo].[sqlcorlib_drop_tables]') AND OBJECTPROPERTY(Id, N'IsProcedure') = 1)
+DROP PROCEDURE [dbo].[sqlcorlib_drop_tables]
 GO
 /*******************************************************************************
 
-    Name:           sgp_drop_tables
+    Name:           sqlcorlib_drop_tables
     Description:    drops all (or a subset) of the tables in the database.
 
     Dependencies:
@@ -32,7 +32,7 @@ GO
                                 which is functionality we don't really need here.
 
 ********************************************************************************/
-CREATE PROCEDURE sgp_drop_tables
+CREATE PROCEDURE sqlcorlib_drop_tables
     @pattern sysname        -- pattern to define which tables to drop
     , @debug INT = 0        -- (optional) output the dynamic sql text, without executing
 AS
