@@ -8,10 +8,11 @@ GO
 
     Dependencies:
     (1) sqlcorlib_drop_foreign_keys
-    (2) sqlcorlib_drop_tables
+    (2) sqlcorlib_drop_functions
     (3) sqlcorlib_drop_procedures
-    (4) sqlcorlib_drop_functions
-    (5) sqlcorlib_drop_views
+    (4) sqlcorlib_drop_tables
+    (5) sqlcorlib_drop_triggers
+    (6) sqlcorlib_drop_views
 
     Usage Notes:
     (1) Use the 'pattern' parameter to drop all or a subset of objects,
@@ -22,14 +23,15 @@ GO
 
     Design Notes:
     (1) This procedure will drop (in-order):
+        - views
         - foreign-keys
+        - triggers
         - tables
         - procedures
         - functions
-        - views
 
     TODO:
-    (1) May want to expand this to drop UDTs (user-defined types) and triggers
+    (1) May want to expand this to drop UDTs (user-defined types)
 
 ********************************************************************************/
 CREATE PROCEDURE sqlcorlib_drop_all
@@ -41,11 +43,12 @@ BEGIN
 	-- interfering with SELECT statements.
 	SET NOCOUNT ON;
 
+    EXEC sqlcorlib_drop_views           @pattern = @pattern, @debug = @debug
     EXEC sqlcorlib_drop_foreign_keys    @pattern = @pattern, @debug = @debug
+    EXEC sqlcorlib_drop_triggers        @pattern = @pattern, @debug = @debug
     EXEC sqlcorlib_drop_tables          @pattern = @pattern, @debug = @debug
     EXEC sqlcorlib_drop_procedures      @pattern = @pattern, @debug = @debug
     EXEC sqlcorlib_drop_functions       @pattern = @pattern, @debug = @debug
-    EXEC sqlcorlib_drop_views           @pattern = @pattern, @debug = @debug
 
 END
 GO
