@@ -46,10 +46,10 @@ BEGIN
     END
 
     -- de-quote all the parameters (in case they are already quoted)
-    SET @server = dbo.sgf_dequotename(@server)
-    SET @catalog = dbo.sgf_dequotename(@catalog)
-    SET @schema = dbo.sgf_dequotename(@schema)
-    SET @table = dbo.sgf_dequotename(@table)
+    SET @server = dbo.sqlcorlib_dequote_name(@server)
+    SET @catalog = dbo.sqlcorlib_dequote_name(@catalog)
+    SET @schema = dbo.sqlcorlib_dequote_name(@schema)
+    SET @table = dbo.sqlcorlib_dequote_name(@table)
 
     -- format
 	DECLARE @full_name sysname

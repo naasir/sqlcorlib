@@ -13,7 +13,7 @@ GO
 **
 ** Purpose:         format a fully qualified database object name
 **
-** Usage:       
+** Usage:
 ** select dbo.sgf_format_full_name('[bigapple].[adept40].[dbo].[trip]', '@schema.@table')
 ** returns> dbo.trip
 **
@@ -26,7 +26,7 @@ GO
 **
 ** Modifications:
 ** 04/24/2009       nramji      Original coding.
-** 
+**
 ** TODO:
 ** 04/27/2009       nramji      Validate input?
 ** 04/27/2009       nramji      Handle 3-part and 2-part names? (might have to search right-to-left for delimiters)
@@ -43,37 +43,37 @@ BEGIN
 
     DECLARE @delimiter NVARCHAR(10)
     SET @delimiter = '%.%'
-    
+
 	DECLARE @delimiter_index INT
-	
+
 	-- append a period since this is our delimiter
     DECLARE @text NVARCHAR(512)
     SET @text = @name + '.'
-    
+
     -- dequote
-    SET @text = dbo.sgf_dequotename(@text)
+    SET @text = dbo.sqlcorlib_dequote_name(@text)
 
     -- parse the qualified name
     DECLARE @server sysname
     SET @delimiter_index = PATINDEX(@delimiter, @text)
     SET @server = LEFT(@text, @delimiter_index - 1)
     SET @text = SUBSTRING(@text, @delimiter_index + 1, LEN(@text))
-    
+
     DECLARE @catalog sysname
     SET @delimiter_index = PATINDEX(@delimiter, @text)
     SET @catalog = LEFT(@text, @delimiter_index - 1)
     SET @text = SUBSTRING(@text, @delimiter_index + 1, LEN(@text))
-    
+
     DECLARE @schema sysname
     SET @delimiter_index = PATINDEX(@delimiter, @text)
     SET @schema = LEFT(@text, @delimiter_index - 1)
     SET @text = SUBSTRING(@text, @delimiter_index + 1, LEN(@text))
-    
+
     DECLARE @table sysname
     SET @delimiter_index = PATINDEX(@delimiter, @text)
     SET @table = LEFT(@text, @delimiter_index - 1)
     SET @text = SUBSTRING(@text, @delimiter_index + 1, LEN(@text))
-    
+
 	-- substitute the variables in the pattern
 	DECLARE @result NVARCHAR(512)
 	SET @result = @pattern

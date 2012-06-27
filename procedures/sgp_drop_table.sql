@@ -17,31 +17,31 @@ GO
 ** 04/30/2009       nramji      Now handles quoted names.
 **
 ** TODO:
-** 
+**
 ********************************************************************************/
 CREATE PROCEDURE sgp_drop_table
 
-	@table sysname          -- the name of the table to drop                
+	@table sysname          -- the name of the table to drop
 
 AS
 BEGIN
 	-- SET NOCOUNT ON added to prevent extra result sets from
 	-- interfering with SELECT statements.
 	SET NOCOUNT ON;
-    
+
     DECLARE @sql NVARCHAR(500)
     SET @sql = N' DROP TABLE {table}'
     SET @sql = REPLACE(@sql, '{table}', @table)
-    
+
     -- check for normal table
-    IF EXISTS (SELECT * 
-                FROM INFORMATION_SCHEMA.TABLES 
-                WHERE table_name = dbo.sgf_dequotename(@table))
+    IF EXISTS (SELECT *
+                FROM INFORMATION_SCHEMA.TABLES
+                WHERE table_name = dbo.sqlcorlib_dequote_name(@table))
     BEGIN
         EXEC sp_executesql @sql
     END
-    
-    
+
+
     -- check for temp table
     ELSE
     BEGIN
