@@ -16,21 +16,6 @@ GO
         To drop all: @pattern = '%'
         To drop a subset @pattern = 'mmt_%'
 
-    Design Notes:
-    (1)
-
-
-    TODO:
-    (1)
-
-    History:
-    09/09/2009      nramji      Original Coding.
-    09/10/2009      nramji      Made 'pattern' parameter required, rather than optional,
-                                to make it harder to accidentally drop all.
-    10/30/2009      nramji      Removed dependency on sgp_drop_table;
-                                that sproc was designed to drop temp tables too,
-                                which is functionality we don't really need here.
-
 ********************************************************************************/
 CREATE PROCEDURE sqlcorlib_drop_tables
     @pattern sysname        -- pattern to define which tables to drop
