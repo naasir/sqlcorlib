@@ -1,14 +1,9 @@
-IF  EXISTS (SELECT * FROM dbo.sysobjects WHERE id = OBJECT_ID(N'[dbo].[sgf_sqlserver_version]') AND xtype IN (N'FN', N'IF', N'TF'))
-DROP FUNCTION [dbo].[sgf_sqlserver_version]
-GO
-
-SET ANSI_NULLS ON
-GO
-SET QUOTED_IDENTIFIER ON
+IF  EXISTS (SELECT * FROM dbo.sysobjects WHERE id = OBJECT_ID(N'[dbo].[sqlcorlib_get_sqlserver_version]') AND xtype IN (N'FN', N'IF', N'TF'))
+DROP FUNCTION [dbo].[sqlcorlib_get_sqlserver_version]
 GO
 /*******************************************************************************
 
-    Name:           sgf_sqlserver_version
+    Name:           sqlcorlib_get_sqlserver_version
     Description:    Gets the major version number of the running sql server instance.
 
     Usage Notes:
@@ -19,18 +14,15 @@ GO
         .
         .
         .
-    
+
     Design Notes:
     (1) Tested on SQL2K and SQL2K8
-    
+
     TODO:
     (1)
-    
-    History:
-    05/26/2009       nramji      Original Coding.
-    
+
 ********************************************************************************/
-CREATE FUNCTION sgf_sqlserver_version
+CREATE FUNCTION sqlcorlib_get_sqlserver_version
 (
 )
 RETURNS INT
@@ -40,18 +32,15 @@ BEGIN
     --SERVERPROPERTY('productversion') returns an nvarchar(128)
 	Declare @sqlversion nvarchar(128)
 	set @sqlversion = convert(nvarchar, SERVERPROPERTY('productversion'))
-	
+
 	--extract just the major number
 	set @sqlversion = LEFT(@sqlversion, charindex('.', @sqlversion) - 1)
-	
+
 	-- Return the result as an int
 	DECLARE @Result int
 	set @Result = convert(int, @sqlversion)
-	
+
 	RETURN @Result
 
 END
 GO
-
-
-
