@@ -117,7 +117,7 @@ BEGIN
                                                             , 'dbo'
                                                             , @snapshot_buffer)
     DECLARE @server_path NVARCHAR(512)
-    SET @server_path = dbo.sgf_format_full_name(@destination
+    SET @server_path = dbo.sqlcorlib_format_full_name(@destination
                                             ,'[@server].[@catalog].[@schema]')
 
     SET @sql =  N'EXEC {serverPath}.[sgp_link_pull_data] @source, @destination'

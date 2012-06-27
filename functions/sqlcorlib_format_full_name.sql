@@ -1,37 +1,28 @@
-IF  EXISTS (SELECT * FROM dbo.sysobjects WHERE id = OBJECT_ID(N'[dbo].[sgf_format_full_name]') AND xtype IN (N'FN', N'IF', N'TF'))
-DROP FUNCTION [dbo].[sgf_format_full_name]
+IF  EXISTS (SELECT * FROM dbo.sysobjects WHERE id = OBJECT_ID(N'[dbo].[sqlcorlib_format_full_name]') AND xtype IN (N'FN', N'IF', N'TF'))
+DROP FUNCTION [dbo].[sqlcorlib_format_full_name]
 GO
-
-SET ANSI_NULLS ON
-GO
-SET QUOTED_IDENTIFIER ON
-GO
-
 /*******************************************************************************
-**
-** Name:            sgf_format_full_name
-**
-** Purpose:         format a fully qualified database object name
-**
-** Usage:
-** select dbo.sgf_format_full_name('[bigapple].[adept40].[dbo].[trip]', '@schema.@table')
-** returns> dbo.trip
-**
-** select dbo.sgf_format_full_name('[bigapple].[adept40].[dbo].[trip]', '[@server]')
-** returns> [bigapple]
-**
-** Usage Notes:
-** (1)  'pattern' parameter acknowledges the following key words:
-**      @server, @catalog, @schema, @table
-**
-** Modifications:
-** 04/24/2009       nramji      Original coding.
-**
-** TODO:
-** 04/27/2009       nramji      Validate input?
-** 04/27/2009       nramji      Handle 3-part and 2-part names? (might have to search right-to-left for delimiters)
+
+    Name:           sqlcorlib_format_full_name
+    Description:    Formats a fully-qualified database object name.
+
+    Usage:
+    (1) select dbo.sqlcorlib_format_full_name('[bigapple].[adept40].[dbo].[trip]', '@schema.@table')
+        returns> dbo.trip
+
+    (2) select dbo.sqlcorlib_format_full_name('[bigapple].[adept40].[dbo].[trip]', '[@server]')
+        returns> [bigapple]
+
+    Usage Notes:
+    (1)  'pattern' parameter acknowledges the following key words:
+         @server, @catalog, @schema, @table
+
+    TODO:
+    (1) Validate input?
+    (2) Handle 3-part and 2-part names? (might have to search right-to-left for delimiters)
+
 ********************************************************************************/
-CREATE FUNCTION sgf_format_full_name
+CREATE FUNCTION sqlcorlib_format_full_name
 (
 	-- Add the parameters for the function here
     @name NVARCHAR(512),
@@ -87,4 +78,3 @@ BEGIN
 
 END
 GO
-
