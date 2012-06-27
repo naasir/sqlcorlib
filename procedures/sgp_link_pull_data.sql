@@ -80,7 +80,7 @@ BEGIN
 
         -- check if there is a column mismatch between our source data
         -- and the destination table we are trying to insert into
-        IF (dbo.sgf_has_same_table_def(@destination_table, @temp_table) = 0)
+        IF (dbo.sqlcorlib_is_same_table(@destination_table, @temp_table) = 0)
         BEGIN
             -- column mismatch:
             -- rename the existing table by appending the current timestamp
